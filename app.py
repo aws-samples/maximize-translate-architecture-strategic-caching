@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-import secrets
-
 import aws_cdk as cdk
 
 from caching_translate.caching_translate_stack import CachingTranslateStack

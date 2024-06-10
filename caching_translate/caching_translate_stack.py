@@ -1,14 +1,9 @@
-from _weakref import proxy
-
 from constructs import Construct
 from aws_cdk import (
-    Duration,
     Stack,
-    aws_lambda as _lambda,
     aws_apigateway as apigw,
     aws_cognito as cognito, CfnOutput, RemovalPolicy
 )
-import secrets
 from .translation_cache import TranslationCache
 
 

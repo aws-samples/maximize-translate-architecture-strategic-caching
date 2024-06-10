@@ -5,8 +5,6 @@ from botocore.exceptions import ClientError
 import boto3
 import hashlib
 
-import time
-
 
 def does_target_language_exists(target_language):
     """Checks whether the requested target language exists.
@@ -99,7 +97,7 @@ def should_cache_be_used(input, table_name):
         print(response)
 
         if 'Item' in response:
-            #print("Retrieved messages file from cache", json.dumps(response['Item']))
+
             use_cache = True
             print('Hashes match, will try to use cache first')
             output["hash"] = response['Item']["hash"]
@@ -169,9 +167,6 @@ def cache_translated_text(input, table_name, current_hash):
 
     table = dynamodb.Table(table_name)
 
-    # translation_key = input['src_locale'] + "-" + input['target_locale'] + "-" + input['src_text']
-    # current_hash = get_hash_from_text(translation_key)
-
     now = datetime.now()
     one_month_later = now + timedelta(days=1)
     epoch_time = int(one_month_later.timestamp())
@@ -191,7 +186,6 @@ def cache_translated_text(input, table_name, current_hash):
         print(e.response['Error']['Message'])
     else:
         print("PutItem succeeded:")
-        #print(json.dumps(response, indent=4))
 
 
 def generate_translations_with_cache(src_locale, target_locale, input_text, table_name):
@@ -227,7 +221,7 @@ def generate_translations_with_cache(src_locale, target_locale, input_text, tabl
         use_cache, output = should_cache_be_used(input, table_name)
 
         if use_cache:
-            #print("Retrieved messages file from cache", json.dumps(output))
+
             translated_text_list.append(output["translated_text"])
 
         else:

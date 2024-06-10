@@ -5,14 +5,10 @@ from generate_translations import generate_translations_with_cache
 import time
 from botocore.exceptions import ClientError
 
-## Table structure
-# ID | HASH (PK) | SRC_LANG | SRC_TEXT | TARGET_LANG | TARGET_TEXT
-# table = ddb.Table(os.environ['TRANSLATION_CACHE_TABLE_NAME'])
 _lambda = boto3.client('lambda')
 
 
 def handler(event, context):
-
     print('request: {}'.format(json.dumps(event)))
 
     request = json.loads(event['body'])
@@ -53,7 +49,3 @@ def handler(event, context):
             },
             'body': json.dumps(error)
         }
-
-
-if __name__ == "__main__":
-    print(handler(None, None))
